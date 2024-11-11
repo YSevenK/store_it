@@ -41,9 +41,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     className="h-auto w-[200px] lg:w-[250px]"
                 />
             </div>
+            {children}
         </section>
-
-        {children}
     </div>
 };
 
