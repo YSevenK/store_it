@@ -6,14 +6,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-
-
-
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
-    SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
@@ -21,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { Separator } from "./ui/separator";
 import { navItems } from "@/constants";
 import FileUploader from "./FileUploader";
+import { signOutUser } from "@/lib/actions/user.actions";
 
 interface Props {
     ownerId: string;
@@ -72,7 +68,7 @@ const MobileNacigation = ({ ownerId, accountId, fullName, avatar, email }: Props
                         <FileUploader />
 
                         <form action="">
-                            <Button type="submit" className="mobile-sign-out-button" onClick={() => { }}>
+                            <Button type="submit" className="mobile-sign-out-button" onClick={async () => await signOutUser()}>
                                 <Image src="/assets/icons/logout.svg" alt="logo" width={24} height={24} />
                                 <p>logout</p>
                             </Button>
