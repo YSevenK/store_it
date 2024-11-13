@@ -55,8 +55,6 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
                         <p className="caption">{email}</p>
                     </div>
                 </div>
-
-
             </Link>
         </aside>
     )

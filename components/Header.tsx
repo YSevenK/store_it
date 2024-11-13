@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "./ui/button";
 import Search from "./Search";
 import FileUploader from "./FileUploader";
+import Image from "next/image";
+
 
 const Header = () => {
     return (
@@ -13,7 +15,7 @@ const Header = () => {
 
                 <form action="">
                     <Button type="submit" className="sign-out-button">
-                        <img src="/assets/icons/logout.svg" alt="logo" width={24} height={24} className="w-6" />
+                        <Image src="/assets/icons/logout.svg" alt="logo" width={24} height={24} className="w-6" />
                     </Button>
                 </form>
             </div>

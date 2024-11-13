@@ -4,7 +4,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Link from "next/link"
-
+import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -111,7 +111,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                         {type == "sign-in" ? "Sign In" : "Sign Up"}
 
                         {isLoading && (
-                            <img src="/assets/icons/loader.svg" alt="loader" width={24} height={24} className="ml-2 animate-spin" />
+                            <Image src="/assets/icons/loader.svg" alt="loader" width={24} height={24} className="ml-2 animate-spin" />
                         )}
                     </Button>
 
