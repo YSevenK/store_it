@@ -28,6 +28,8 @@ import Link from 'next/link';
 import { constructDownloadUrl } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { renameFile } from '@/lib/actions/file.actions';
+import { usePathname } from 'next/navigation';
 
 
 
@@ -38,6 +40,8 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
     const [name, setName] = useState(file.name);
     const [isLoading, setIsLoading] = useState(false);
 
+    const path = usePathname();
+
 
     const closeAllModals = () => {
         setIsModalOpen(false);
@@ -47,7 +51,22 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
         //   setEmails([]);
     };
 
-    const handleActions = async () => {
+    const handleAction = async () => {
+        if (!action) return;
+        setIsLoading(true);
+        let success = false;
+
+        const actions = {
+            rename: () => renameFile({ fileId: file.$id, name, extension: file.extension, path }),
+            share: () => console.log('share'),
+            delete: () => console.log('delete'),
+        };
+
+        success = await actions[action.value as keyof typeof actions]();
+
+        if (success) closeAllModals();
+
+        setIsLoading(false);
 
     }
 
@@ -68,7 +87,7 @@ const ActionsDropdown = ({ file }: { file: Models.Document }) => {
                         <Button onClick={closeAllModals} className='modal-cancel-button'>
                             Cancel
                         </Button>
-                        <Button onClick={handleActions} className='modal-submit-button'>
+                        <Button onClick={handleAction} className='modal-submit-button'>
                             <p className='capitalize'>{value}</p>
                             {isLoading && (
                                 <Image src="/assets/icons/loader.svg" alt='loader' width={24} height={24} className='animate-spin' />

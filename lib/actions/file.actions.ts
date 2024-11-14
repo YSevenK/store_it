@@ -66,7 +66,7 @@ export const getFiles = async () => {
         if (!currentUser) throw new Error("User not found");
 
         const queries = createQueries(currentUser);
-        
+
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
@@ -75,5 +75,22 @@ export const getFiles = async () => {
         return parseStringify(files);
     } catch (error) {
         handleError(error, "Error getting files");
+    }
+};
+
+export const renameFile = async ({ fileId, name, extension, path }: RenameFileProps) => {
+    const { databases } = await createAdminClient();
+
+    try {
+        const newName = `${name}.${extension}`;
+        const uploadedFile = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            { name: newName }
+        );
+        revalidatePath(path);
+    } catch (error) {
+        handleError(error, "Error renaming file");
     }
 }
