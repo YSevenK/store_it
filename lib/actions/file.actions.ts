@@ -94,3 +94,19 @@ export const renameFile = async ({ fileId, name, extension, path }: RenameFilePr
         handleError(error, "Error renaming file");
     }
 }
+
+export const updateFileUsers = async ({ fileId, emails, path }: UpdateFileUsersProps) => {
+    const { databases } = await createAdminClient();
+
+    try {
+        const uploadedFile = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            { users: emails }
+        );
+        revalidatePath(path);
+    } catch (error) {
+        handleError(error, "Error renaming file");
+    }
+}
